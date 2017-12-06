@@ -40,7 +40,7 @@ const vector<double>& Simplex_Table::Give_Function() { return _function; }
 void Simplex_Table::Create_Simplex_Table()
 {
 	double buffer;
-	vector<pair<double,pair<int,int>>> buffer_vector;
+	vector<pair<double, pair<int, int>>> buffer_vector;
 	cout << "min or max (for max input 1, for min input 0) : ";
 	cin >> _min_max;
 	cout << "Input the number of equations ( more than 0 ) : ";
@@ -91,26 +91,26 @@ void Simplex_Table::Create_Simplex_Table()
 		_function.push_back(buffer);
 	}
 
-/*	cout << "These are the arguments" << endl;
+	/*	cout << "These are the arguments" << endl;
 	for (auto i = 0; i < _number_of_equations; ++i)
 	{
-		for (auto j = 0; j < _number_of_arguments; ++j)
-		{
-			cout << _equations[i][j] << " ";
-		}
-		cout << endl;
+	for (auto j = 0; j < _number_of_arguments; ++j)
+	{
+	cout << _equations[i][j] << " ";
+	}
+	cout << endl;
 	}*/
-/*	cout << "This is the function" << endl;
+	/*	cout << "This is the function" << endl;
 	for (auto i = 0; i < _number_of_arguments + 1; ++i)
 	{
-		cout << _function[i] << " + ";
+	cout << _function[i] << " + ";
 	}
 	cout << endl; */
 	for (auto i = 0; i < _number_of_equations; ++i)
 	{
-		buffer_vector.push_back(make_pair(_conditional_values[i],make_pair(_number_of_arguments + 1 + i, 0)));
+		buffer_vector.push_back(make_pair(_conditional_values[i], make_pair(_number_of_arguments + 1 + i, 0)));
 		for (auto j = 0; j < _equations[0].size(); ++j)
-			buffer_vector.push_back(make_pair(_equations[i][j], make_pair(_number_of_arguments + 1 + i, j+1)));
+			buffer_vector.push_back(make_pair(_equations[i][j], make_pair(_number_of_arguments + 1 + i, j + 1)));
 		_simplex_table.push_back(buffer_vector);
 		buffer_vector.clear();
 	}
@@ -130,27 +130,27 @@ void Simplex_Table::Create_Simplex_Table()
 			else
 				buffer_vector.push_back(make_pair(_function[i], make_pair(_number_of_equations + 1, i)));
 		}
-/*		if (_function[i] != 0)
-			buffer_vector.push_back(make_pair((_function[i])*(-1), make_pair(_number_of_equations + 1, i)));
+		/*		if (_function[i] != 0)
+		buffer_vector.push_back(make_pair((_function[i])*(-1), make_pair(_number_of_equations + 1, i)));
 		else
-			buffer_vector.push_back(make_pair(_function[i], make_pair(_number_of_equations + 1, i)));*/
+		buffer_vector.push_back(make_pair(_function[i], make_pair(_number_of_equations + 1, i)));*/
 	}
 	_simplex_table.push_back(buffer_vector);
-/*	cout << "This is the simplex table" << endl;
+	/*	cout << "This is the simplex table" << endl;
 	for (auto i = 0; i < _simplex_table.size(); ++i)
 	{
-		for (auto j = 0; j < _simplex_table[0].size(); ++j)
-			cout << _simplex_table[i][j].first << "  ";
-		cout << endl;
+	for (auto j = 0; j < _simplex_table[0].size(); ++j)
+	cout << _simplex_table[i][j].first << "  ";
+	cout << endl;
 	}*/
 }
 
 void Simplex_Table::Print_Problem()
 {
-// Выводим уравнение F
+	// Выводим уравнение F
 	vector<pair<double, unsigned int>> buffer_vector;
-	for(auto i = 1; i < _function.size(); ++i)
-	{ 
+	for (auto i = 1; i < _function.size(); ++i)
+	{
 		if (_function[i] != 0)
 			buffer_vector.push_back(make_pair(_function[i], i));
 	}
@@ -159,7 +159,7 @@ void Simplex_Table::Print_Problem()
 	{
 		if (buffer_vector[0].first > 0)
 			cout << buffer_vector[0].first << " + ";
-		else 
+		else
 			cout << buffer_vector[0].first << " - ";
 	}
 	else
@@ -169,7 +169,7 @@ void Simplex_Table::Print_Problem()
 	}
 	for (auto i = 0; i < buffer_vector.size() - 1; ++i)
 	{
-		if (buffer_vector[i+1].first > 0)
+		if (buffer_vector[i + 1].first > 0)
 		{
 			cout << buffer_vector[i].first << "*x" << buffer_vector[i].second << " + ";
 		}
@@ -178,9 +178,9 @@ void Simplex_Table::Print_Problem()
 			cout << abs(buffer_vector[i].first) << "*x" << buffer_vector[i].second << " - ";
 		}
 	}
-	cout << buffer_vector.back().first <<"*x" << buffer_vector.back().second << endl;
+	cout << buffer_vector.back().first << "*x" << buffer_vector.back().second << " -> max"<< endl;
 	buffer_vector.clear();
-// Выводим неравенства
+	// Выводим неравенства
 	for (auto i = 0; i < _equations.size(); ++i)
 	{
 		for (auto j = 0; j < _equations.size(); ++j)
@@ -202,9 +202,9 @@ void Simplex_Table::Print_Problem()
 			}
 		}
 		cout << buffer_vector.back().first << "*x" << buffer_vector.back().second;
-		cout << " <= " <<_conditional_values[i] << endl;
+		cout << " <= " << _conditional_values[i] << endl;
 		buffer_vector.clear();
-		cout << endl;
+//		cout << endl;
 	}
 }
 
@@ -217,7 +217,7 @@ void Simplex_Table::Print_Canonized_Problem()
 		if (_function[i] != 0)
 			buffer_vector.push_back(make_pair(_function[i], i));
 	}
-	cout << "F = - ( ";
+	cout << "F =  ";
 	if (_function[0] != 0)
 	{
 		if (buffer_vector[0].first > 0)
@@ -238,9 +238,9 @@ void Simplex_Table::Print_Canonized_Problem()
 			cout << abs(buffer_vector[i].first) << "*x" << buffer_vector[i].second << " + ";
 		}
 	}
-	cout << buffer_vector.back().first << "*x" << buffer_vector.back().second << " )" << endl;
+	cout << buffer_vector.back().first << "*x" << buffer_vector.back().second << " -> min" << endl;
 	buffer_vector.clear();
-	cout  << endl;
+//	cout << endl;
 	// Выводим равенства
 	for (auto i = 0; i < _equations.size(); ++i)
 	{
@@ -263,9 +263,9 @@ void Simplex_Table::Print_Canonized_Problem()
 			}
 		}
 		cout << buffer_vector.back().first << "*x" << buffer_vector.back().second;
-		cout << " + x"<< _equations.size()+ 1 + i << " = " << _conditional_values[i] << endl;
+		cout << " + x" << _equations.size() + 1 + i << " = " << _conditional_values[i] << endl;
 		buffer_vector.clear();
-		cout << endl;
+//		cout << endl;
 	}
 }
 
@@ -354,6 +354,7 @@ void  Simplex_Table::Opornoe_Solution()
 	int solve_row;
 	int solve_column;
 	double solve_value;
+	double min_value;
 	for (auto i = 0; i < _simplex_table.size() - 1; ++i)
 	{
 		if (_simplex_table[i][0].first < 0)
@@ -375,7 +376,7 @@ void  Simplex_Table::Opornoe_Solution()
 			}
 		}
 	}
-	cout << "Opornoe Solution" << endl;
+	cout << "Basis Solution" << endl;
 	Print_Simplex_Table();
 }
 void Simplex_Table::Simplex_Method()
@@ -392,199 +393,68 @@ void Simplex_Table::Simplex_Method()
 	double solve_value;
 	vector<vector<double>> buffer_vector_vector;
 	vector<double> buffer_vector;
-/*	if (_min_max)
+	while (!out_of_positives)
 	{
-				while (!out_of_negatives)
-				{
-					min_negative = 0;
-					out_of_negatives = 1;
-					for (auto i = 1; i < _simplex_table.back().size(); ++i)
-					{
-						if (_simplex_table.back()[i].first < 0)
-						{
-							out_of_negatives = 0;
-							min_negative = _simplex_table.back()[i].first;
-							solve_column = i;
-							solve_perem_column = _simplex_table.back()[i].second.second;
-							break;
-						}
+		min_positive = 0;
+		out_of_positives = 1;
+		for (auto i = 1; i < _simplex_table.back().size(); ++i)
+		{
+			if (_simplex_table.back()[i].first > 0)
+			{
+				out_of_positives = 0;
+				min_positive = _simplex_table.back()[i].first;
+				solve_column = i;
+				solve_perem_column = _simplex_table.back()[i].second.second;
+				break;
+			}
 
-					}
-					for (auto i = 1; i < _simplex_table.back().size(); ++i)
-					{
-						if (_simplex_table.back()[i].first < min_negative)
-						{
-							out_of_negatives = 0;
-							min_negative = _simplex_table.back()[i].first;
-							solve_column = i;
-							solve_perem_column = _simplex_table.back()[i].second.second;
-						}
-					}
-					if (out_of_negatives == 1)
-						break;
-					cout << min_negative << endl;
-					for (auto i = 0; i < _simplex_table.size() - 1; ++i)
-					{
-						if (_simplex_table[i][solve_column].first != 0)
-						{
-							if ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0)
-							{
-								min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
-								solve_row = i;
-								solve_perem_row = _simplex_table[i][0].second.first;
-								break;
-							}
-						}
-						else
-							continue;
-					}
-					for (auto i = 0; i < _simplex_table.size() - 1; ++i)
-					{
-						if (_simplex_table[i][solve_column].first != 0)
-						{
-							if (((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0) && ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) < min_pos_div))
-							{
-								min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
-								solve_row = i;
-								solve_perem_row = _simplex_table[i][0].second.first;
-							}
-						}
-						else
-							continue;
-					}
-					solve_value = _simplex_table[solve_row][solve_column].first;
-					cout << "Solve element is " << solve_value << " with basis perem x" << solve_perem_row << " and free perem x" << solve_perem_column << endl;
-					Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
-					Print_Simplex_Table();
+		}
+		for (auto i = 1; i < _simplex_table.back().size(); ++i)
+		{
+			if ((_simplex_table.back()[i].first > 0) && (_simplex_table.back()[i].first > min_positive))
+			{
+				out_of_positives = 0;
+				min_positive = _simplex_table.back()[i].first;
+				solve_column = i;
+				solve_perem_column = _simplex_table.back()[i].second.second;
+			}
+		}
+		if (out_of_positives == 1)
+			break;
+		for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+		{
+			if (_simplex_table[i][solve_column].first != 0)
+			{
+				if ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0)
+				{
+					min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
+					solve_row = i;
+					solve_perem_row = _simplex_table[i][0].second.first;
+					break;
 				}
 			}
 			else
-			{
-				while (!out_of_positives)
-				{
-					min_positive = 0;
-					out_of_positives = 1;
-					for (auto i = 1; i < _simplex_table.back().size(); ++i)
-					{
-						if (_simplex_table.back()[i].first > 0)
-						{
-							out_of_positives = 0;
-							min_positive = _simplex_table.back()[i].first;
-							solve_column = i;
-							solve_perem_column = _simplex_table.back()[i].second.second;
-							break;
-						}
-
-					}
-					for (auto i = 1; i < _simplex_table.back().size(); ++i)
-					{
-						if ((_simplex_table.back()[i].first > 0)&&(_simplex_table.back()[i].first < min_positive))
-						{
-							out_of_positives = 0;
-							min_positive = _simplex_table.back()[i].first;
-							solve_column = i;
-							solve_perem_column = _simplex_table.back()[i].second.second;
-						}
-					}
-					if (out_of_positives == 1)
-						break;
-					for (auto i = 0; i < _simplex_table.size() - 1; ++i)
-					{
-						if (_simplex_table[i][solve_column].first != 0)
-						{
-							if ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0)
-							{
-								min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
-								solve_row = i;
-								solve_perem_row = _simplex_table[i][0].second.first;
-								break;
-							}
-						}
-						else
-							continue;
-					}
-					for (auto i = 0; i < _simplex_table.size() - 1; ++i)
-					{
-						if (_simplex_table[i][solve_column].first != 0)
-						{
-							if (((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0) && ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) < min_pos_div))
-							{
-								min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
-								solve_row = i;
-								solve_perem_row = _simplex_table[i][0].second.first;
-							}
-						}
-						else
-							continue;
-					}
-					solve_value = _simplex_table[solve_row][solve_column].first;
-					cout << "Solve element is " << solve_value << " with basis perem x" << solve_perem_row << " and free perem x" << solve_perem_column << endl;
-					Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
-					Print_Simplex_Table();
-				}
-			}*/
-		while (!out_of_positives)
-		{
-			min_positive = 0;
-			out_of_positives = 1;
-			for (auto i = 1; i < _simplex_table.back().size(); ++i)
-			{
-				if (_simplex_table.back()[i].first > 0)
-				{
-					out_of_positives = 0;
-					min_positive = _simplex_table.back()[i].first;
-					solve_column = i;
-					solve_perem_column = _simplex_table.back()[i].second.second;
-					break;
-				}
-
-			}
-			for (auto i = 1; i < _simplex_table.back().size(); ++i)
-			{
-				if ((_simplex_table.back()[i].first > 0) && (_simplex_table.back()[i].first < min_positive))
-				{
-					out_of_positives = 0;
-					min_positive = _simplex_table.back()[i].first;
-					solve_column = i;
-					solve_perem_column = _simplex_table.back()[i].second.second;
-				}
-			}
-			if (out_of_positives == 1)
-				break;
-			for (auto i = 0; i < _simplex_table.size() - 1; ++i)
-			{
-				if (_simplex_table[i][solve_column].first != 0)
-				{
-					if ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0)
-					{
-						min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
-						solve_row = i;
-						solve_perem_row = _simplex_table[i][0].second.first;
-						break;
-					}
-				}
-				else
-					continue;
-			}
-			for (auto i = 0; i < _simplex_table.size() - 1; ++i)
-			{
-				if (_simplex_table[i][solve_column].first != 0)
-				{
-					if (((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0) && ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) < min_pos_div))
-					{
-						min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
-						solve_row = i;
-						solve_perem_row = _simplex_table[i][0].second.first;
-					}
-				}
-				else
-					continue;
-			}
-			solve_value = _simplex_table[solve_row][solve_column].first;
-			cout << "Solve element is " << solve_value << " with basis perem x" << solve_perem_row << " and free perem x" << solve_perem_column << endl;
-			Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
-			Print_Simplex_Table();
+				continue;
 		}
+		for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+		{
+			if (_simplex_table[i][solve_column].first != 0)
+			{
+				if (((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0) && ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) < min_pos_div))
+				{
+					min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
+					solve_row = i;
+					solve_perem_row = _simplex_table[i][0].second.first;
+				}
+			}
+			else
+				continue;
+		}
+		solve_value = _simplex_table[solve_row][solve_column].first;
+		cout << "Solve element is " << solve_value << " with basis perem x" << solve_perem_row << " and free perem x" << solve_perem_column << endl;
+		Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
+		Print_Simplex_Table();
+	}
 }
 
 void Simplex_Table::Just_In_Case()
@@ -607,12 +477,10 @@ void Simplex_Table::Transform_Into_Twin()
 	_min_max = !_min_max;
 	for (auto i = 0; i < _number_of_arguments; ++i)
 	{
-		cout << i << endl;
-		buffer_vector.push_back(make_pair(_function[i+1]*(-1), make_pair(_number_of_equations + 1 + i, 0))); // _function begins with the free element
-//		cout << i << endl;
+		buffer_vector.push_back(make_pair(_function[i + 1] * (-1), make_pair(_number_of_equations + 1 + i, 0))); 
 		for (auto j = 0; j < _number_of_equations; ++j)
 		{
-			buffer_vector.push_back(make_pair(_equations[j][i]*(-1), make_pair(_number_of_equations + 1 + i, j + 1)));
+			buffer_vector.push_back(make_pair(_equations[j][i] * (-1), make_pair(_number_of_equations + 1 + i, j + 1)));
 		}
 		buffer_vector_vector.push_back(buffer_vector);
 		buffer_vector.clear();
@@ -620,7 +488,7 @@ void Simplex_Table::Transform_Into_Twin()
 	buffer_vector.push_back(make_pair(0, make_pair(_number_of_arguments + 1, 0)));
 	for (auto i = 0; i <_conditional_values.size(); ++i)
 	{
-		buffer_vector.push_back(make_pair(_conditional_values[i]*-1, make_pair(_number_of_arguments + 1, i + 1)));
+		buffer_vector.push_back(make_pair(_conditional_values[i] * -1, make_pair(_number_of_arguments + 1, i + 1)));
 	}
 	buffer_vector_vector.push_back(buffer_vector);
 	_simplex_table.clear();
@@ -629,7 +497,7 @@ void Simplex_Table::Transform_Into_Twin()
 	{
 		_simplex_table.push_back(buffer_vector_vector[i]);
 	}
-	Print_Simplex_Table();
+	Print_Simplex_Table_Twin();
 }
 
 void Simplex_Table::Print_Twin_Problem()
@@ -667,7 +535,6 @@ void Simplex_Table::Print_Twin_Problem()
 	}
 	cout << buffer_vector.back().first << "*y" << buffer_vector.back().second << endl;
 	buffer_vector.clear();
-	cout << endl;
 	// Выводим неравенства
 	for (auto i = 0; i < _equations.size(); ++i)
 	{
@@ -693,4 +560,231 @@ void Simplex_Table::Print_Twin_Problem()
 		cout << " >= " << _conditional_values[i] << endl;
 		buffer_vector.clear();
 	}
+}
+
+void Simplex_Table::Print_Simplex_Table_Twin()
+{
+	cout << "This is the simplex table" << endl;
+	string buffer;
+	cout << std::setw(8) << " ";
+	cout << std::setw(8) << "Si0";
+	for (auto i = 1; i < _simplex_table[0].size(); ++i)
+	{
+		buffer = "y";
+		buffer += to_string(((_simplex_table[0][i]).second).second);
+		cout << std::setw(8) << buffer;
+	}
+	cout << endl;
+	for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+	{
+		buffer = "y";
+		buffer += to_string(_simplex_table[i][0].second.first);
+		cout << std::setw(8) << buffer;
+		for (auto j = 0; j < _simplex_table[i].size(); ++j)
+		{
+			cout << std::setw(8) << defaultfloat << std::setprecision(3) << _simplex_table[i][j].first;
+		}
+		cout << endl;
+	}
+	cout << std::setw(8) << "F";
+	for (auto i = 0; i < (_simplex_table.back()).size(); ++i)
+	{
+		cout << std::setw(8) << defaultfloat << std::setprecision(3) << ((_simplex_table.back())[i]).first;
+	}
+	cout << endl;
+}
+
+void Simplex_Table::Simplex_Method_Twin()
+{
+	bool out_of_negatives = 0;
+	bool out_of_positives = 0;
+	double min_negative;
+	double min_positive;
+	double min_pos_div;
+	int solve_perem_column;
+	int solve_perem_row;
+	int solve_row;
+	int solve_column;
+	double solve_value;
+	vector<vector<double>> buffer_vector_vector;
+	vector<double> buffer_vector;
+	while (!out_of_positives)
+	{
+		min_positive = 0;
+		out_of_positives = 1;
+		for (auto i = 1; i < _simplex_table.back().size(); ++i)
+		{
+			if (_simplex_table.back()[i].first > 0)
+			{
+				out_of_positives = 0;
+				min_positive = _simplex_table.back()[i].first;
+				solve_column = i;
+				solve_perem_column = _simplex_table.back()[i].second.second;
+				break;
+			}
+
+		}
+		for (auto i = 1; i < _simplex_table.back().size(); ++i)
+		{
+			if ((_simplex_table.back()[i].first > 0) && (_simplex_table.back()[i].first > min_positive))
+			{
+				out_of_positives = 0;
+				min_positive = _simplex_table.back()[i].first;
+				solve_column = i;
+				solve_perem_column = _simplex_table.back()[i].second.second;
+			}
+		}
+		if (out_of_positives == 1)
+			break;
+		for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+		{
+			if (_simplex_table[i][solve_column].first != 0)
+			{
+				if ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0)
+				{
+					min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
+					solve_row = i;
+					solve_perem_row = _simplex_table[i][0].second.first;
+					break;
+				}
+			}
+			else
+				continue;
+		}
+		for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+		{
+			if (_simplex_table[i][solve_column].first != 0)
+			{
+				if (((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0) && ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) < min_pos_div))
+				{
+					min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
+					solve_row = i;
+					solve_perem_row = _simplex_table[i][0].second.first;
+				}
+			}
+			else
+				continue;
+		}
+		solve_value = _simplex_table[solve_row][solve_column].first;
+		cout << "Solve element is " << solve_value << " with basis perem y" << solve_perem_row << " and free perem y" << solve_perem_column << endl;
+		Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
+		Print_Simplex_Table_Twin();
+	}
+	for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+	{
+		if (_simplex_table[i][0].first < 0)
+		{
+			solve_row = i;
+			solve_perem_row = _simplex_table[i][0].second.first;
+			for (auto j = 1; j < _simplex_table.back().size(); ++j)
+			{
+				if (_simplex_table[i][j].first < 0)
+				{
+					solve_column = j;
+					solve_perem_column = _simplex_table[i][j].second.second;
+					solve_value = _simplex_table[i][j].first;
+					Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
+					cout << "Solve element is " << solve_value << " with basis perem y" << solve_perem_row << " and free perem y" << solve_perem_column << endl;
+					Print_Simplex_Table_Twin();
+					break;
+				}
+			}
+		}
+	}
+	min_positive = 0;
+	out_of_positives = 0;
+	while (!out_of_positives)
+	{
+		min_positive = 0;
+		out_of_positives = 1;
+		for (auto i = 1; i < _simplex_table.back().size(); ++i)
+		{
+			if (_simplex_table.back()[i].first > 0)
+			{
+				out_of_positives = 0;
+				min_positive = _simplex_table.back()[i].first;
+				solve_column = i;
+				solve_perem_column = _simplex_table.back()[i].second.second;
+				break;
+			}
+
+		}
+		for (auto i = 1; i < _simplex_table.back().size(); ++i)
+		{
+			if ((_simplex_table.back()[i].first > 0) && (_simplex_table.back()[i].first > min_positive))
+			{
+				out_of_positives = 0;
+				min_positive = _simplex_table.back()[i].first;
+				solve_column = i;
+				solve_perem_column = _simplex_table.back()[i].second.second;
+			}
+		}
+		if (out_of_positives == 1)
+			break;
+		for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+		{
+			if (_simplex_table[i][solve_column].first != 0)
+			{
+				if ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0)
+				{
+					min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
+					solve_row = i;
+					solve_perem_row = _simplex_table[i][0].second.first;
+					break;
+				}
+			}
+			else
+				continue;
+		}
+		for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+		{
+			if (_simplex_table[i][solve_column].first != 0)
+			{
+				if (((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) > 0) && ((_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first) < min_pos_div))
+				{
+					min_pos_div = (_simplex_table[i][0].first) / (_simplex_table[i][solve_column].first);
+					solve_row = i;
+					solve_perem_row = _simplex_table[i][0].second.first;
+				}
+			}
+			else
+				continue;
+		}
+		solve_value = _simplex_table[solve_row][solve_column].first;
+		cout << "Solve element is " << solve_value << " with basis perem y" << solve_perem_row << " and free perem y" << solve_perem_column << endl;
+		Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
+		Print_Simplex_Table_Twin();
+	}
+}
+
+void  Simplex_Table::Opornoe_Solution_Twin()
+{
+	int solve_perem_column;
+	int solve_perem_row;
+	int solve_row;
+	int solve_column;
+	double solve_value;
+	for (auto i = 0; i < _simplex_table.size() - 1; ++i)
+	{
+		if (_simplex_table[i][0].first < 0)
+		{
+			solve_row = i;
+			solve_perem_row = _simplex_table[i][0].second.first;
+			for (auto j = 1; j < _simplex_table.back().size(); ++j)
+			{
+				if (_simplex_table[i][j].first < 0)
+				{
+					solve_column = j;
+					solve_perem_column = _simplex_table[i][j].second.second;
+					solve_value = _simplex_table[i][j].first;
+					Jordan_Exclusions(solve_row, solve_column, solve_perem_row, solve_perem_column);
+					cout << "Solve element is " << solve_value << " with basis perem y" << solve_perem_row << " and free perem y" << solve_perem_column << endl;
+					Print_Simplex_Table_Twin();
+					break;
+				}
+			}
+		}
+	}
+	cout << "Basis Solution" << endl;
+	Print_Simplex_Table_Twin();
 }
