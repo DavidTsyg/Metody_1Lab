@@ -8,7 +8,7 @@ private:
 	bool _min_max;
 	int _number_of_equations;
 	int _number_of_arguments;
-	vector<vector<pair<double,pair<int, int>>>> _simplex_table;
+	vector<vector<pair<double, pair<int, int>>>> _simplex_table;
 	vector<vector<double>> _equations;
 	vector<double> _conditional_values;
 	vector<double> _function;
@@ -26,12 +26,13 @@ public:
 	void Print_Problem();
 	void Print_Canonized_Problem();
 	void Print_Simplex_Table();
-//	bool Basis_Solution();
 	void Opornoe_Solution();
 	void Jordan_Exclusions(int solve_row, int solve_column, int solve_perem_row, int solve_perem_column);
 	void Simplex_Method();
 	void Just_In_Case();
 	void Transform_Into_Twin();
 	void Print_Twin_Problem();
-	void Solve_Twin();
+	void Print_Simplex_Table_Twin();
+	void Simplex_Method_Twin();
+	void Opornoe_Solution_Twin();
 };
